@@ -1,0 +1,3 @@
+## > adobe
+USER-AGENT,adobe*
+DOMAIN-SUFFIX,adobe.io,REJECT

@@ -1,0 +1,4 @@
+## > whatsapp
+USER-AGENT,whatsapp*
+DOMAIN-SUFFIX,whatsapp.com
+DOMAIN-SUFFIX,*.whatsapp.*
