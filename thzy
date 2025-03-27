@@ -17,6 +17,7 @@ ruleset=📟 whatsapp,https://raw.githubusercontent.com/blackmatrix7/ios_rule_sc
 ruleset=🤖 OPENAI,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.list
 ruleset=🎥 douyin,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/DouYin/DouYin.list
 ruleset=🎥 tijtok,https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/TikTok/TikTok.list
+ruleset=🌏 小红书，https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/XiaoHongShu/XiaoHongShu.list
 ruleset=❌️ adobe,https://github.com/bettersao/catclash/raw/main/RuanXY/adobe.list
 ruleset=🎯 全球直连,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list
 ruleset=🎯 全球直连,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/UnBan.list
