@@ -60,7 +60,8 @@ custom_proxy_group=☎️ line`select`[]🇨🇳 台湾节点`[]🇨🇳 台湾�
 custom_proxy_group=🤖 OPENAI`select`[]🇺🇲 美国节点`[]🇨🇳 台湾节点`[]🇸🇬 狮城节点
 custom_proxy_group=📟 whatsapp`select`[]🇭🇰 香港节点`[]🇭🇰 香港节点负载均衡
 custom_proxy_group=🎥 douyin`select`[]REJECT`[]DIRECT
-custom_proxy_group=🎥 tijtok`select`[]REJECT`[]DIRECT`[]🇺🇲 美国节点`[]🇨🇳 台湾节点`[]🇸🇬 狮城节点
+custom_proxy_group=🎥 tijtok`select`[]REJECT`[]DIRECT`[]🇺🇲 美国节点`[]🇨🇳 台湾节点`[]🇸🇬 狮城节点`[]twzzdl
+custom_proxy_group=🌏 小红书`select`[]REJECT`[]DIRECT`[]🇺🇲 美国节点`[]🇨🇳 台湾节点`[]🇸🇬 狮城节点`[]twzzdl
 custom_proxy_group=📲 电报消息`select`[]🚀 节点选择`[]♻️ 自动选择`[]🇭🇰 香港节点`[]🇨🇳 台湾节点`[]🇺🇲 美国节点`[]🚀 手动切换`[]DIRECT
 custom_proxy_group=📢 谷歌FCM`select`[]DIRECT`[]🚀 节点选择`[]🇺🇲 美国节点`[]🇭🇰 香港节点`[]🇨🇳 台湾节点`[]🚀 手动切换
 custom_proxy_group=📢 谷歌🇨🇳Play下载`select`[]🚀 节点选择`[]DIRECT`[]♻️ 自动选择`[]🇭🇰 香港节点`[]🇨🇳 台湾节点`[]🇺🇲 美国节点`[]🚀 手动切换
@@ -91,6 +92,7 @@ custom_proxy_group=🛒 HKtao`select`[]🇭🇰 香港节点`[]🇭🇰 香港�
 custom_proxy_group=🛒 TWtao`select`[]🇨🇳 台湾节点`[]🇨🇳 台湾节点负载均衡
 custom_proxy_group=🔯 故障转移`fallback`(^(?!.*(电信|联通|移动)).*)`http://www.gstatic.com/generate_204`300,,50
 custom_proxy_group=🔮 负载均衡`load-balance`(^(?!.*(电信|联通|移动)).*)`http://www.gstatic.com/generate_204`300,,50
+custom_proxy_group=twzzdl 链式`relay``[]🇨🇳 台湾节点负载均衡[]twzz
 
 ;设置分组标志位
 
