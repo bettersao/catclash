@@ -1,13 +1,48 @@
-from pathlib import Path
-
-content = r'''# TjyFl.ini -> Mihomo YAML 规则/策略组片段
-# 来源：https://raw.githubusercontent.com/bettersao/catclash/refs/heads/main/TjyFl.ini
+# Mihomo config.yaml based on the official MetaCubeX schema and converted from TjyFl.ini.
+# This is a full-config scaffold, not a ready-to-connect subscription: the source INI defines
+# policy groups/rules only and contains no proxy node credentials or subscription URL.
+# Add your real `proxies:` or `proxy-providers:` before using proxy routes.
 #
-# 重要：
-# 1) 这是可合并到主 Mihomo 配置中的 rule-providers / proxy-groups / rules 片段，不是完整独立配置。
-# 2) 原始 INI 不包含代理节点，因此不能凭它生成 proxies。
-# 3) 导入前请确认主配置中已有对应代理节点；策略组 filter 会按节点名称匹配地区关键词。
-# 4) 规则顺序按原 INI 整理，前面的规则优先匹配。
+# Official schema reference: https://github.com/MetaCubeX/mihomo/blob/Meta/docs/config.yaml
+
+mixed-port: 7890
+allow-lan: false
+mode: rule
+log-level: info
+ipv6: false
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: strict
+global-client-fingerprint: chrome
+
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+# The source TjyFl.ini does not define proxies or proxy-providers.
+# Add your own subscription nodes here, or add a proxy-providers section.
+# Example only (do not uncomment without a real URL):
+# proxy-providers:
+#   my-subscription:
+#     type: http
+#     url: "https://YOUR_SUBSCRIPTION_URL"
+#     path: ./proxy_providers/my-subscription.yaml
+#     interval: 3600
+#     health-check:
+#       enable: true
+#       url: "http://www.gstatic.com/generate_204"
+#       interval: 300
+
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: redir-host
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  nameserver:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
 
 proxy-groups:
   - name: "🚀 节点选择"
@@ -669,8 +704,3 @@ rules:
   - RULE-SET,download,🎯 全球直连
   - GEOIP,CN,🎯 全球直连
   - MATCH,🐟 漏网之鱼
-'''
-path = Path("/mnt/data/TjyFl-Mihomo-rules.yaml")
-path.write_text(content, encoding="utf-8")
-print(f"已生成：{path}")
-print(f"文件大小：{path.stat().st_size} bytes")
