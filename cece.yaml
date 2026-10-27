@@ -1,7 +1,59 @@
+mixed-port: 7897
+
+allow-lan: true
+
+mode: rule
+
+log-level: info
+
+ipv6: false
+
+unified-delay: true
+
+tcp-concurrent: false
+
+find-process-mode: strict
+
+global-client-fingerprint: chrome
+
+dns:
+  enable: true
+  listen: 127.0.0.1:5335
+  use-hosts: true
+  ipv6: false
+  respect-rules: false
+  enhanced-mode: fake-ip
+  default-nameserver: [223.5.5.5, 119.29.29.29]
+  nameserver: [223.5.5.5, 119.29.29.29]
+  fake-ip-range: 198.18.0.1/16
+  fallback: ['https://dns.alidns.com/dns-query']
+  fake-ip-filter: ['*.lan', '*.local', localhost, '*.msftconnecttest.com', '*.msftncsi.com', '*.nintendo.net', '*.playstation.net', '*.xboxlive.com', stun.*, time.*]
+
+profile:
+  store-selected: true
+  store-fake-ip: false
+
+sniffer:
+  enable: true
+  parse-pure-ip: false
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - 8080-8880
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+
+proxies:
+  - {name: anytls-node, type: anytls, server: example.com, port: 443, password: secret, udp: true, sni: example.com, client-fingerprint: chrome, alpn: [h2, http/1.1]}
+
 proxy-groups:
   - {name: "🚀 节点选择", type: select, proxies: ["🔮 负载均衡", "🔯 故障转移", "♻️ 自动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇺🇲 美国节点", "🚀 手动切换", DIRECT, "🇭🇰 香港节点负载均衡"]}
   - {name: "🚀 手动切换", type: select, include-all: true}
-  - {name: "♻️ 自动选择", type: url-test, include-all: true, url: "http://www.gstatic.com/generate_204", interval: 300, tolerance: 50}
+  - {name: "♻️ 自动选择", type: url-test, include-all: true, url: 'http://www.gstatic.com/generate_204', interval: 300, tolerance: 50}
   - {name: "☎️ line", type: select, proxies: ["🇨🇳 台湾节点", "🇨🇳 台湾节点负载均衡"]}
   - {name: "🤖 OPENAI", type: select, proxies: ["🇺🇲 美国节点", "🇨🇳 台湾节点", "🇸🇬 狮城节点"]}
   - {name: "📟 whatsapp", type: select, proxies: ["🇭🇰 香港节点", "🇭🇰 香港节点负载均衡"]}
@@ -28,55 +80,55 @@ proxy-groups:
   - {name: "🍃 应用净化", type: select, proxies: [REJECT, DIRECT]}
   - {name: "❌️ adobe", type: select, proxies: [REJECT, DIRECT]}
   - {name: "🐟 漏网之鱼", type: select, proxies: ["🚀 节点选择", "♻️ 自动选择", DIRECT, "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇺🇲 美国节点", "🚀 手动切换", "🔮 负载均衡", "🇭🇰 香港节点负载均衡", "🇨🇳 台湾节点负载均衡"]}
-  - {name: "🇭🇰 香港节点", type: url-test, include-all: true, filter: "(香港|港|HK|hk|Hong Kong|HongKong|hongkong)", url: "http://www.gstatic.com/generate_204", interval: 300, tolerance: 50}
-  - {name: "🇺🇲 美国节点", type: url-test, include-all: true, filter: "(美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States)", url: "http://www.gstatic.com/generate_204", interval: 300, tolerance: 150}
-  - {name: "🇨🇳 台湾节点", type: url-test, include-all: true, filter: "(台湾|台|新北|彰化|TW|Taiwan)", url: "http://www.gstatic.com/generate_204", interval: 300, tolerance: 50}
-  - {name: "🇸🇬 狮城节点", type: url-test, include-all: true, filter: "(新加坡|坡|狮城|SG|Singapore)", url: "http://www.gstatic.com/generate_204", interval: 300, tolerance: 50}
-  - {name: "🇭🇰 香港节点负载均衡", type: load-balance, include-all: true, filter: "(香港|港|HK|hk|Hong Kong|HongKong|hongkong)", url: "http://www.gstatic.com/generate_204", interval: 300, strategy: consistent-hashing}
-  - {name: "🇨🇳 台湾节点负载均衡", type: load-balance, include-all: true, filter: "(台湾|台|新北|彰化|TW|Taiwan)", url: "http://www.gstatic.com/generate_204", interval: 300, strategy: consistent-hashing}
+  - {name: "🇭🇰 香港节点", type: url-test, include-all: true, filter: '(香港|港|HK|hk|Hong Kong|HongKong|hongkong)', url: 'http://www.gstatic.com/generate_204', interval: 300, tolerance: 50}
+  - {name: "🇺🇲 美国节点", type: url-test, include-all: true, filter: '(美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States)', url: 'http://www.gstatic.com/generate_204', interval: 300, tolerance: 150}
+  - {name: "🇨🇳 台湾节点", type: url-test, include-all: true, filter: '(台湾|台|新北|彰化|TW|Taiwan)', url: 'http://www.gstatic.com/generate_204', interval: 300, tolerance: 50}
+  - {name: "🇸🇬 狮城节点", type: url-test, include-all: true, filter: '(新加坡|坡|狮城|SG|Singapore)', url: 'http://www.gstatic.com/generate_204', interval: 300, tolerance: 50}
+  - {name: "🇭🇰 香港节点负载均衡", type: load-balance, include-all: true, filter: '(香港|港|HK|hk|Hong Kong|HongKong|hongkong)', url: 'http://www.gstatic.com/generate_204', interval: 300, strategy: consistent-hashing}
+  - {name: "🇨🇳 台湾节点负载均衡", type: load-balance, include-all: true, filter: '(台湾|台|新北|彰化|TW|Taiwan)', url: 'http://www.gstatic.com/generate_204', interval: 300, strategy: consistent-hashing}
   - {name: "🛒 HKtao", type: select, proxies: ["🇭🇰 香港节点", "🇭🇰 香港节点负载均衡"]}
   - {name: "🛒 TWtao", type: select, proxies: ["🇨🇳 台湾节点", "🇨🇳 台湾节点负载均衡"]}
-  - {name: "🔯 故障转移", type: fallback, include-all: true, filter: "^(?!.*(电信|联通|移动)).*", url: "http://www.gstatic.com/generate_204", interval: 300}
-  - {name: "🔮 负载均衡", type: load-balance, include-all: true, filter: "^(?!.*(电信|联通|移动)).*", url: "http://www.gstatic.com/generate_204", interval: 300, strategy: consistent-hashing}
+  - {name: "🔯 故障转移", type: fallback, include-all: true, filter: '^(?!.*(电信|联通|移动)).*', url: 'http://www.gstatic.com/generate_204', interval: 300}
+  - {name: "🔮 负载均衡", type: load-balance, include-all: true, filter: '^(?!.*(电信|联通|移动)).*', url: 'http://www.gstatic.com/generate_204', interval: 300, strategy: consistent-hashing}
 
 rule-providers:
-  hktao: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/bettersao/catclash/main/TaoHT/hktjy.list", path: ./ruleset/hktao.list, interval: 86400, format: text}
-  twtao: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/bettersao/catclash/main/TaoHT/TWtao.list", path: ./ruleset/twtao.list, interval: 86400, format: text}
-  line: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Line/Line.list", path: ./ruleset/line.list, interval: 86400, format: text}
-  whatsapp: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Whatsapp/Whatsapp.list", path: ./ruleset/whatsapp.list, interval: 86400, format: text}
-  openai: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.list", path: ./ruleset/openai.list, interval: 86400, format: text}
-  openai-2: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Claude/Claude.list", path: ./ruleset/openai-2.list, interval: 86400, format: text}
-  douyin: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/DouYin/DouYin.list", path: ./ruleset/douyin.list, interval: 86400, format: text}
-  tijtok: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/TikTok/TikTok.list", path: ./ruleset/tijtok.list, interval: 86400, format: text}
-  okx: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/OKX/OKX.list", path: ./ruleset/okx.list, interval: 86400, format: text}
-  adobe: {type: http, behavior: classical, url: "https://github.com/bettersao/catclash/raw/main/RuanXY/adobe.list", path: ./ruleset/adobe.list, interval: 86400, format: text}
-  local-area-network: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list", path: ./ruleset/local-area-network.list, interval: 86400, format: text}
-  un-ban: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/UnBan.list", path: ./ruleset/un-ban.list, interval: 86400, format: text}
-  ban-ad: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list", path: ./ruleset/ban-ad.list, interval: 86400, format: text}
-  ban-program-ad: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list", path: ./ruleset/ban-program-ad.list, interval: 86400, format: text}
-  google-fcm: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/GoogleFCM.list", path: ./ruleset/google-fcm.list, interval: 86400, format: text}
-  google-cn-proxy-ip: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/GoogleCNProxyIP.list", path: ./ruleset/google-cn-proxy-ip.list, interval: 86400, format: text}
-  google-cn: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/GoogleCN.list", path: ./ruleset/google-cn.list, interval: 86400, format: text}
-  youtube: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/YouTube.list", path: ./ruleset/youtube.list, interval: 86400, format: text}
-  facebook: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Facebook/Facebook.list", path: ./ruleset/facebook.list, interval: 86400, format: text}
-  google: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Google.list", path: ./ruleset/google.list, interval: 86400, format: text}
-  bing: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Bing.list", path: ./ruleset/bing.list, interval: 86400, format: text}
-  onedrive: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/OneDrive.list", path: ./ruleset/onedrive.list, interval: 86400, format: text}
-  microsoft: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Microsoft.list", path: ./ruleset/microsoft.list, interval: 86400, format: text}
-  apple: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Apple.list", path: ./ruleset/apple.list, interval: 86400, format: text}
-  telegram: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Telegram.list", path: ./ruleset/telegram.list, interval: 86400, format: text}
-  epic: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Epic.list", path: ./ruleset/epic.list, interval: 86400, format: text}
-  origin: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Origin.list", path: ./ruleset/origin.list, interval: 86400, format: text}
-  sony: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Sony.list", path: ./ruleset/sony.list, interval: 86400, format: text}
-  steam: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Steam.list", path: ./ruleset/steam.list, interval: 86400, format: text}
-  nintendo: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Nintendo.list", path: ./ruleset/nintendo.list, interval: 86400, format: text}
-  china-media: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaMedia.list", path: ./ruleset/china-media.list, interval: 86400, format: text}
-  proxy-media: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyMedia.list", path: ./ruleset/proxy-media.list, interval: 86400, format: text}
-  proxy-gfwlist: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/ProxyGFWlist.list", path: ./ruleset/proxy-gfwlist.list, interval: 86400, format: text}
-  china-ip: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaIp.list", path: ./ruleset/china-ip.list, interval: 86400, format: text}
-  china-domain: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list", path: ./ruleset/china-domain.list, interval: 86400, format: text}
-  china-company-ip: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list", path: ./ruleset/china-company-ip.list, interval: 86400, format: text}
-  download: {type: http, behavior: classical, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Download.list", path: ./ruleset/download.list, interval: 86400, format: text}
+  hktao: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/bettersao/catclash/main/TaoHT/hktjy.list', path: ./ruleset/hktao.list, interval: 86400, format: text}
+  twtao: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/bettersao/catclash/main/TaoHT/TWtao.list', path: ./ruleset/twtao.list, interval: 86400, format: text}
+  line: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Line/Line.list', path: ./ruleset/line.list, interval: 86400, format: text}
+  whatsapp: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Whatsapp/Whatsapp.list', path: ./ruleset/whatsapp.list, interval: 86400, format: text}
+  openai: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.list', path: ./ruleset/openai.list, interval: 86400, format: text}
+  claude: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Claude/Claude.list', path: ./ruleset/claude.list, interval: 86400, format: text}
+  douyin: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/DouYin/DouYin.list', path: ./ruleset/douyin.list, interval: 86400, format: text}
+  tiktok: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/TikTok/TikTok.list', path: ./ruleset/tiktok.list, interval: 86400, format: text}
+  okx: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/OKX/OKX.list', path: ./ruleset/okx.list, interval: 86400, format: text}
+  adobe: {type: http, behavior: classical, url: 'https://github.com/bettersao/catclash/raw/main/RuanXY/adobe.list', path: ./ruleset/adobe.list, interval: 86400, format: text}
+  local-area-network: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list', path: ./ruleset/local-area-network.list, interval: 86400, format: text}
+  un-ban: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/UnBan.list', path: ./ruleset/un-ban.list, interval: 86400, format: text}
+  ban-ad: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list', path: ./ruleset/ban-ad.list, interval: 86400, format: text}
+  ban-program-ad: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list', path: ./ruleset/ban-program-ad.list, interval: 86400, format: text}
+  google-fcm: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/GoogleFCM.list', path: ./ruleset/google-fcm.list, interval: 86400, format: text}
+  google-cn-proxy-ip: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/GoogleCNProxyIP.list', path: ./ruleset/google-cn-proxy-ip.list, interval: 86400, format: text}
+  google-cn: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/GoogleCN.list', path: ./ruleset/google-cn.list, interval: 86400, format: text}
+  youtube: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/YouTube.list', path: ./ruleset/youtube.list, interval: 86400, format: text}
+  facebook: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Facebook/Facebook.list', path: ./ruleset/facebook.list, interval: 86400, format: text}
+  google: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Google.list', path: ./ruleset/google.list, interval: 86400, format: text}
+  bing: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Bing.list', path: ./ruleset/bing.list, interval: 86400, format: text}
+  onedrive: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/OneDrive.list', path: ./ruleset/onedrive.list, interval: 86400, format: text}
+  microsoft: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Microsoft.list', path: ./ruleset/microsoft.list, interval: 86400, format: text}
+  apple: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Apple.list', path: ./ruleset/apple.list, interval: 86400, format: text}
+  telegram: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Telegram.list', path: ./ruleset/telegram.list, interval: 86400, format: text}
+  epic: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Epic.list', path: ./ruleset/epic.list, interval: 86400, format: text}
+  origin: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Origin.list', path: ./ruleset/origin.list, interval: 86400, format: text}
+  sony: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Sony.list', path: ./ruleset/sony.list, interval: 86400, format: text}
+  steam: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Steam.list', path: ./ruleset/steam.list, interval: 86400, format: text}
+  nintendo: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Nintendo.list', path: ./ruleset/nintendo.list, interval: 86400, format: text}
+  china-media: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaMedia.list', path: ./ruleset/china-media.list, interval: 86400, format: text}
+  proxy-media: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyMedia.list', path: ./ruleset/proxy-media.list, interval: 86400, format: text}
+  proxy-gfwlist: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/ProxyGFWlist.list', path: ./ruleset/proxy-gfwlist.list, interval: 86400, format: text}
+  china-ip: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaIp.list', path: ./ruleset/china-ip.list, interval: 86400, format: text}
+  china-domain: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list', path: ./ruleset/china-domain.list, interval: 86400, format: text}
+  china-company-ip: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list', path: ./ruleset/china-company-ip.list, interval: 86400, format: text}
+  download: {type: http, behavior: classical, url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Download.list', path: ./ruleset/download.list, interval: 86400, format: text}
 
 rules:
   - "RULE-SET,hktao,🛒 HKtao"
@@ -84,9 +136,9 @@ rules:
   - "RULE-SET,line,☎️ line"
   - "RULE-SET,whatsapp,📟 whatsapp"
   - "RULE-SET,openai,🤖 OPENAI"
-  - "RULE-SET,openai-2,🤖 OPENAI"
+  - "RULE-SET,claude,🤖 OPENAI"
   - "RULE-SET,douyin,🎥 douyin"
-  - "RULE-SET,tijtok,🎥 tijtok"
+  - "RULE-SET,tiktok,🎥 tijtok"
   - "RULE-SET,okx,🎲 okx"
   - "RULE-SET,adobe,❌️ adobe"
   - "RULE-SET,local-area-network,🎯 全球直连"
