@@ -1,0 +1,676 @@
+from pathlib import Path
+
+content = r'''# TjyFl.ini -> Mihomo YAML 规则/策略组片段
+# 来源：https://raw.githubusercontent.com/bettersao/catclash/refs/heads/main/TjyFl.ini
+#
+# 重要：
+# 1) 这是可合并到主 Mihomo 配置中的 rule-providers / proxy-groups / rules 片段，不是完整独立配置。
+# 2) 原始 INI 不包含代理节点，因此不能凭它生成 proxies。
+# 3) 导入前请确认主配置中已有对应代理节点；策略组 filter 会按节点名称匹配地区关键词。
+# 4) 规则顺序按原 INI 整理，前面的规则优先匹配。
+
+proxy-groups:
+  - name: "🚀 节点选择"
+    type: select
+    proxies:
+      - "🔮 负载均衡"
+      - "🔯 故障转移"
+      - "♻️ 自动选择"
+      - "🇭🇰 香港节点"
+      - "🇨🇳 台湾节点"
+      - "🇺🇲 美国节点"
+      - "🚀 手动切换"
+      - DIRECT
+      - "🇭🇰 香港节点负载均衡"
+
+  - name: "🚀 手动切换"
+    type: select
+    include-all: true
+
+  - name: "♻️ 自动选择"
+    type: url-test
+    include-all: true
+    url: "http://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+
+  - name: "☎️ line"
+    type: select
+    proxies:
+      - "🇨🇳 台湾节点"
+      - "🇨🇳 台湾节点负载均衡"
+
+  - name: "🤖 OPENAI"
+    type: select
+    proxies:
+      - "🇺🇲 美国节点"
+      - "🇨🇳 台湾节点"
+      - "🇸🇬 狮城节点"
+
+  - name: "📟 whatsapp"
+    type: select
+    proxies:
+      - "🇭🇰 香港节点"
+      - "🇭🇰 香港节点负载均衡"
+
+  - name: "🎥 douyin"
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+
+  - name: "🎥 tijtok"
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+      - "🇺🇲 美国节点"
+      - "🇨🇳 台湾节点"
+      - "🇸🇬 狮城节点"
+
+  - name: "🎲 okx"
+    type: select
+    proxies:
+      - "🇭🇰 香港节点"
+      - "🇭🇰 香港节点负载均衡"
+
+  - name: "📲 电报消息"
+    type: select
+    proxies:
+      - "🚀 节点选择"
+      - "♻️ 自动选择"
+      - "🇭🇰 香港节点"
+      - "🇨🇳 台湾节点"
+      - "🇺🇲 美国节点"
+      - "🚀 手动切换"
+      - DIRECT
+      - "🇭🇰 香港节点负载均衡"
+      - "🔮 负载均衡"
+
+  - name: "📢 谷歌FCM"
+    type: select
+    proxies:
+      - DIRECT
+      - "🚀 节点选择"
+      - "🇺🇲 美国节点"
+      - "🇭🇰 香港节点"
+      - "🇨🇳 台湾节点"
+      - "🚀 手动切换"
+      - "🇭🇰 香港节点负载均衡"
+      - "🔮 负载均衡"
+
+  - name: "📢 谷歌🇨🇳Play下载"
+    type: select
+    proxies:
+      - "🚀 节点选择"
+      - DIRECT
+      - "♻️ 自动选择"
+      - "🇭🇰 香港节点"
+      - "🇨🇳 台湾节点"
+      - "🇺🇲 美国节点"
+      - "🚀 手动切换"
+      - "🇭🇰 香港节点负载均衡"
+      - "🔮 负载均衡"
+
+  - name: "📢 谷歌🇨🇳Play服务"
+    type: select
+    proxies:
+      - "🚀 节点选择"
+      - DIRECT
+      - "♻️ 自动选择"
+      - "🇭🇰 香港节点"
+      - "🇨🇳 台湾节点"
+      - "🇺🇲 美国节点"
+      - "🚀 手动切换"
+      - "🇭🇰 香港节点负载均衡"
+      - "🔮 负载均衡"
+
+  - name: "📢 谷歌🇨🇳"
+    type: select
+    proxies:
+      - DIRECT
+      - "🚀 节点选择"
+      - "🇺🇲 美国节点"
+      - "🇭🇰 香港节点"
+      - "🇨🇳 台湾节点"
+      - "🚀 手动切换"
+      - "🇭🇰 香港节点负载均衡"
+      - "🔮 负载均衡"
+
+  - name: "📢 谷歌"
+    type: select
+    proxies:
+      - "🚀 节点选择"
+      - DIRECT
+      - "♻️ 自动选择"
+      - "🇭🇰 香港节点"
+      - "🇨🇳 台湾节点"
+      - "🇺🇲 美国节点"
+      - "🚀 手动切换"
+      - "🇭🇰 香港节点负载均衡"
+      - "🔮 负载均衡"
+
+  - name: "📹 油管视频"
+    type: select
+    proxies:
+      - "🚀 节点选择"
+      - "♻️ 自动选择"
+      - "🇭🇰 香港节点"
+      - "🇨🇳 台湾节点"
+      - "🇺🇲 美国节点"
+      - "🚀 手动切换"
+      - DIRECT
+      - "🇭🇰 香港节点负载均衡"
+      - "🔮 负载均衡"
+
+  - name: "📸 Facebook"
+    type: select
+    proxies:
+      - "🚀 节点选择"
+      - "♻️ 自动选择"
+      - "🇭🇰 香港节点"
+      - "🇨🇳 台湾节点"
+      - "🇺🇲 美国节点"
+      - "🚀 手动切换"
+      - DIRECT
+      - "🇭🇰 香港节点负载均衡"
+      - "🔮 负载均衡"
+
+  - name: "🌍 国外媒体"
+    type: select
+    proxies:
+      - "🚀 节点选择"
+      - "♻️ 自动选择"
+      - "🇭🇰 香港节点"
+      - "🇨🇳 台湾节点"
+      - "🇺🇲 美国节点"
+      - "🚀 手动切换"
+      - DIRECT
+      - "🇭🇰 香港节点负载均衡"
+      - "🔮 负载均衡"
+
+  - name: "🌏 国内媒体"
+    type: select
+    proxies:
+      - DIRECT
+      - "🇭🇰 香港节点"
+      - "🇨🇳 台湾节点"
+      - "🚀 手动切换"
+
+  - name: "Ⓜ️ 微软Bing"
+    type: select
+    proxies:
+      - DIRECT
+      - "🚀 节点选择"
+      - "🇺🇲 美国节点"
+      - "🇭🇰 香港节点"
+      - "🇨🇳 台湾节点"
+      - "🚀 手动切换"
+      - "🔮 负载均衡"
+
+  - name: "Ⓜ️ 微软云盘"
+    type: select
+    proxies:
+      - DIRECT
+      - "🚀 节点选择"
+      - "🇺🇲 美国节点"
+      - "🇭🇰 香港节点"
+      - "🇨🇳 台湾节点"
+      - "🚀 手动切换"
+      - "🔮 负载均衡"
+
+  - name: "Ⓜ️ 微软服务"
+    type: select
+    proxies:
+      - DIRECT
+      - "🚀 节点选择"
+      - "🇺🇲 美国节点"
+      - "🇭🇰 香港节点"
+      - "🇨🇳 台湾节点"
+      - "🚀 手动切换"
+      - "🔮 负载均衡"
+
+  - name: "🍎 苹果服务"
+    type: select
+    proxies:
+      - DIRECT
+      - "🚀 节点选择"
+      - "🇺🇲 美国节点"
+      - "🇭🇰 香港节点"
+      - "🇨🇳 台湾节点"
+      - "🚀 手动切换"
+      - "🔮 负载均衡"
+
+  - name: "🎮 游戏平台"
+    type: select
+    proxies:
+      - DIRECT
+      - "🚀 节点选择"
+      - "🇺🇲 美国节点"
+      - "🇭🇰 香港节点"
+      - "🇨🇳 台湾节点"
+      - "🚀 手动切换"
+      - "🔮 负载均衡"
+
+  - name: "🎯 全球直连"
+    type: select
+    proxies:
+      - DIRECT
+      - "🚀 节点选择"
+      - "♻️ 自动选择"
+
+  - name: "🛑 广告拦截"
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+
+  - name: "🍃 应用净化"
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+
+  - name: "❌️ adobe"
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+
+  - name: "🐟 漏网之鱼"
+    type: select
+    proxies:
+      - "🚀 节点选择"
+      - "♻️ 自动选择"
+      - DIRECT
+      - "🇭🇰 香港节点"
+      - "🇨🇳 台湾节点"
+      - "🇺🇲 美国节点"
+      - "🚀 手动切换"
+      - "🔮 负载均衡"
+      - "🇭🇰 香港节点负载均衡"
+      - "🇨🇳 台湾节点负载均衡"
+
+  - name: "🇭🇰 香港节点"
+    type: url-test
+    include-all: true
+    filter: "(香港|港|HK|hk|Hong Kong|HongKong|hongkong)"
+    url: "http://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+
+  - name: "🇺🇲 美国节点"
+    type: url-test
+    include-all: true
+    filter: "(美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States)"
+    url: "http://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 150
+
+  - name: "🇨🇳 台湾节点"
+    type: url-test
+    include-all: true
+    filter: "(台湾|台|新北|彰化|TW|Taiwan)"
+    url: "http://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+
+  - name: "🇸🇬 狮城节点"
+    type: url-test
+    include-all: true
+    filter: "(新加坡|坡|狮城|SG|Singapore)"
+    url: "http://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+
+  - name: "🇭🇰 香港节点负载均衡"
+    type: load-balance
+    strategy: consistent-hashing
+    include-all: true
+    filter: "(香港|港|HK|hk|Hong Kong|HongKong|hongkong)"
+    url: "http://www.gstatic.com/generate_204"
+    interval: 300
+
+  - name: "🇨🇳 台湾节点负载均衡"
+    type: load-balance
+    strategy: consistent-hashing
+    include-all: true
+    filter: "(台湾|台|新北|彰化|TW|Taiwan)"
+    url: "http://www.gstatic.com/generate_204"
+    interval: 300
+
+  - name: "🛒 HKtao"
+    type: select
+    proxies:
+      - "🇭🇰 香港节点"
+      - "🇭🇰 香港节点负载均衡"
+
+  - name: "🛒 TWtao"
+    type: select
+    proxies:
+      - "🇨🇳 台湾节点"
+      - "🇨🇳 台湾节点负载均衡"
+
+  - name: "🔯 故障转移"
+    type: fallback
+    include-all: true
+    filter: "^(?!.*(电信|联通|移动)).*"
+    url: "http://www.gstatic.com/generate_204"
+    interval: 300
+
+  - name: "🔮 负载均衡"
+    type: load-balance
+    strategy: consistent-hashing
+    include-all: true
+    filter: "^(?!.*(电信|联通|移动)).*"
+    url: "http://www.gstatic.com/generate_204"
+    interval: 300
+
+rule-providers:
+  hktjy:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/bettersao/catclash/main/TaoHT/hktjy.list"
+    path: ./ruleset/tjy-hktjy.list
+    interval: 86400
+  twtao:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/bettersao/catclash/main/TaoHT/TWtao.list"
+    path: ./ruleset/tjy-twtao.list
+    interval: 86400
+  line:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Line/Line.list"
+    path: ./ruleset/tjy-line.list
+    interval: 86400
+  whatsapp:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Whatsapp/Whatsapp.list"
+    path: ./ruleset/tjy-whatsapp.list
+    interval: 86400
+  openai:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.list"
+    path: ./ruleset/tjy-openai.list
+    interval: 86400
+  claude:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Claude/Claude.list"
+    path: ./ruleset/tjy-claude.list
+    interval: 86400
+  douyin:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/DouYin/DouYin.list"
+    path: ./ruleset/tjy-douyin.list
+    interval: 86400
+  tiktok:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.list"
+    path: ./ruleset/tjy-tiktok.list
+    interval: 86400
+  okx:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OKX/OKX.list"
+    path: ./ruleset/tjy-okx.list
+    interval: 86400
+  adobe:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/bettersao/catclash/main/RuanXY/adobe.list"
+    path: ./ruleset/tjy-adobe.list
+    interval: 86400
+  lan:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list"
+    path: ./ruleset/tjy-lan.list
+    interval: 86400
+  unban:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/UnBan.list"
+    path: ./ruleset/tjy-unban.list
+    interval: 86400
+  banad:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list"
+    path: ./ruleset/tjy-banad.list
+    interval: 86400
+  banprogramad:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list"
+    path: ./ruleset/tjy-banprogramad.list
+    interval: 86400
+  googlefcm:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/GoogleFCM.list"
+    path: ./ruleset/tjy-googlefcm.list
+    interval: 86400
+  googlecnproxyip:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/GoogleCNProxyIP.list"
+    path: ./ruleset/tjy-googlecnproxyip.list
+    interval: 86400
+  googlecn:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/GoogleCN.list"
+    path: ./ruleset/tjy-googlecn.list
+    interval: 86400
+  youtube:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/YouTube.list"
+    path: ./ruleset/tjy-youtube.list
+    interval: 86400
+  facebook:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Facebook/Facebook.list"
+    path: ./ruleset/tjy-facebook.list
+    interval: 86400
+  google:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Google.list"
+    path: ./ruleset/tjy-google.list
+    interval: 86400
+  bing:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Bing.list"
+    path: ./ruleset/tjy-bing.list
+    interval: 86400
+  onedrive:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/OneDrive.list"
+    path: ./ruleset/tjy-onedrive.list
+    interval: 86400
+  microsoft:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Microsoft.list"
+    path: ./ruleset/tjy-microsoft.list
+    interval: 86400
+  apple:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Apple.list"
+    path: ./ruleset/tjy-apple.list
+    interval: 86400
+  telegram:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Telegram.list"
+    path: ./ruleset/tjy-telegram.list
+    interval: 86400
+  epic:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Epic.list"
+    path: ./ruleset/tjy-epic.list
+    interval: 86400
+  origin:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Origin.list"
+    path: ./ruleset/tjy-origin.list
+    interval: 86400
+  sony:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Sony.list"
+    path: ./ruleset/tjy-sony.list
+    interval: 86400
+  steam:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Steam.list"
+    path: ./ruleset/tjy-steam.list
+    interval: 86400
+  nintendo:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Nintendo.list"
+    path: ./ruleset/tjy-nintendo.list
+    interval: 86400
+  chinamedia:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaMedia.list"
+    path: ./ruleset/tjy-chinamedia.list
+    interval: 86400
+  proxymedia:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyMedia.list"
+    path: ./ruleset/tjy-proxymedia.list
+    interval: 86400
+  proxygfwlist:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyGFWlist.list"
+    path: ./ruleset/tjy-proxygfwlist.list
+    interval: 86400
+  chinaip:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaIp.list"
+    path: ./ruleset/tjy-chinaip.list
+    interval: 86400
+  chinadomain:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list"
+    path: ./ruleset/tjy-chinadomain.list
+    interval: 86400
+  chinacompanyip:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list"
+    path: ./ruleset/tjy-chinacompanyip.list
+    interval: 86400
+  download:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Download.list"
+    path: ./ruleset/tjy-download.list
+    interval: 86400
+
+rules:
+  - RULE-SET,hktjy,🛒 HKtao
+  - RULE-SET,twtao,🛒 TWtao
+  - RULE-SET,line,☎️ line
+  - RULE-SET,whatsapp,📟 whatsapp
+  - RULE-SET,openai,🤖 OPENAI
+  - RULE-SET,claude,🤖 OPENAI
+  - RULE-SET,douyin,🎥 douyin
+  - RULE-SET,tiktok,🎥 tijtok
+  - RULE-SET,okx,🎲 okx
+  - RULE-SET,adobe,❌️ adobe
+  - RULE-SET,lan,🎯 全球直连
+  - RULE-SET,unban,🎯 全球直连
+  - RULE-SET,banad,🛑 广告拦截
+  - RULE-SET,banprogramad,🍃 应用净化
+  - RULE-SET,googlefcm,📢 谷歌FCM
+  - DOMAIN-SUFFIX,xn--ngstr-lra8j.com,📢 谷歌🇨🇳Play下载
+  - DOMAIN-SUFFIX,services.googleapis.cn,📢 谷歌🇨🇳Play服务
+  - RULE-SET,googlecnproxyip,📢 谷歌🇨🇳Play服务
+  - RULE-SET,googlecn,📢 谷歌🇨🇳
+  - RULE-SET,youtube,📹 油管视频
+  - RULE-SET,facebook,📸 Facebook
+  - RULE-SET,google,📢 谷歌
+  - RULE-SET,bing,Ⓜ️ 微软Bing
+  - RULE-SET,onedrive,Ⓜ️ 微软云盘
+  - RULE-SET,microsoft,Ⓜ️ 微软服务
+  - RULE-SET,apple,🍎 苹果服务
+  - RULE-SET,telegram,📲 电报消息
+  - RULE-SET,epic,🎮 游戏平台
+  - RULE-SET,origin,🎮 游戏平台
+  - RULE-SET,sony,🎮 游戏平台
+  - RULE-SET,steam,🎮 游戏平台
+  - RULE-SET,nintendo,🎮 游戏平台
+  - RULE-SET,chinamedia,🌏 国内媒体
+  - RULE-SET,proxymedia,🌍 国外媒体
+  - RULE-SET,proxygfwlist,🚀 节点选择
+  - RULE-SET,chinaip,🎯 全球直连
+  - RULE-SET,chinadomain,🎯 全球直连
+  - RULE-SET,chinacompanyip,🎯 全球直连
+  - RULE-SET,download,🎯 全球直连
+  - GEOIP,CN,🎯 全球直连
+  - MATCH,🐟 漏网之鱼
+'''
+path = Path("/mnt/data/TjyFl-Mihomo-rules.yaml")
+path.write_text(content, encoding="utf-8")
+print(f"已生成：{path}")
+print(f"文件大小：{path.stat().st_size} bytes")
